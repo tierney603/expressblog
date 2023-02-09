@@ -7,6 +7,8 @@ let articlesSchema = new Schema({
   value: String,
   id: String,
   type: String,
+  title: String,
+  createTime: Date,
   // title: String,
 });
 // 将模型关联
@@ -28,12 +30,16 @@ router.post("/addArticle", async function (req, res, next) {
   console.log(req.body);
   const { value, type } = req.body;
   //   const data = await articlesModel.find()
-  const data = await articlesModel.create({
-    value,
-    id: uuidv4(),
-    type: type ? type : null,
-  });
-  res.send({ msg: "接收", data });
+  if (title && value) {
+    const data = await articlesModel.create({
+      value,
+      id: uuidv4(),
+      type: type ? type : null,
+      title,
+      createTime: new Date(),
+    });
+    res.send({ msg: "接收", data });
+  }
 });
 
 router.get("/getArticle", async function (req, res, next) {
@@ -47,26 +53,29 @@ router.get("/getArticle", async function (req, res, next) {
 router.post("/testFun", async function (req, res, next) {
   console.log(req.body);
   const { id } = req.body;
-  // const data = await articlesModel.updateMany({ id },{$set: { type: "后端" }});
-  console.log("id", id);
-  // const data = await articlesModel.updateMany([{id:1},{id:2}],{$set: { type: "lj" }});
-  let reqData=[
-      {id:1},
-      {id:2},
-  ]
-  // const data = await articlesModel.updateMany({$in:reqData.map(v=>v.id) },{$set: { type: "hwj" }});
   const data = await articlesModel.updateMany(
-    {
-      id: {
-        // $in: reqData.map((v) => v.id),
-        $in:[1,2]
-      },
-    },
-    {
-    //   $set: { type: "abc" },
-      $set: { type: ["root","admin"] },
-    }
+    { id },
+    { $set: { type: "后端" } }
   );
+  console.log("id", id);
+  //   const data = await articlesModel.updateMany([{id:1},{id:2}],{$set: { type: "lj" }});
+  //   let reqData=[
+  //       {id:1},
+  //       {id:2},
+  //   ]
+  //   // const data = await articlesModel.updateMany({$in:reqData.map(v=>v.id) },{$set: { type: "hwj" }});
+  //   const data = await articlesModel.updateMany(
+  //     {
+  //       id: {
+  //         // $in: reqData.map((v) => v.id),
+  //         $in:[1,2]
+  //       },
+  //     },
+  //     {
+  //     //   $set: { type: "abc" },
+  //       $set: { type: ["root","admin"] },
+  //     }
+  //   );
 
   console.log("data", data);
   // if(data.length)return res.send({ msg: "", data });

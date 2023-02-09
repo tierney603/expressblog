@@ -14,7 +14,8 @@ var usersRouter = require('./routes/users');
 var todoRouter = require('./routes/todo');
 var studentsRouter = require('./routes/students')
 var articleRouter = require('./routes/article')
-
+var photosRouter = require('./routes/photos')
+// const fileUpload = require('express-fileupload');
 
 const jwtAuth = require('./utils/jwt')
 require('./dao/database')
@@ -34,11 +35,17 @@ app.use(express.static(path.join(__dirname, './view/dist')));
 app.use(cors())
 app.use(jwtAuth)//jwt验证
 
+// 启用文件上传
+// app.use(fileUpload({
+//   createParentPath: true
+// }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/todo', todoRouter);
 app.use('/students', studentsRouter)
 app.use('/article', articleRouter)
+app.use('/photos', photosRouter)
+
 
 
 
