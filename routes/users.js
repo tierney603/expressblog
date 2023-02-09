@@ -6,7 +6,8 @@ const { isAccess } = require('../service/loginService')
 
 const md5 = require('md5')
 const jwt = require('jsonwebtoken')
-
+const dotenv = require("dotenv");
+let { SecretKey } = dotenv.config().parsed;
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
@@ -20,7 +21,7 @@ router.get('/islogin', async (req, res) => {
   // 1.有没有token
   if (!token) return res.send({ message: '该请求需要token！', status: 0 })
   //2.对不对
-  jwt.verify(token, 'qwertyuiop', (err, data) => {
+  jwt.verify(token,SecretKey, (err, data) => {
     // jwt expired  验证过期
     // jwt malformed 没有令牌不存在，应该是未登录
     // invalid token 错误令牌
@@ -40,17 +41,18 @@ router.get('/islogin', async (req, res) => {
 // 登录
 router.post('/login', async function (req, res, next) {
 
-  const { username, pwd } = req.body
-  const newpwd = md5(pwd)
-  const data = await login({ username: username, password: newpwd })
+  let  { username, password } = req.body
+  password = md5(password)
+  const data = await login({  username,  password })
   console.log(data)
   res.send(data)
 });
 // 注册
 router.post('/register', function (req, res) {
-  const { username, pwd, nealname } = req.body
-  const newpwd = md5(pwd)
-  register({ username: username, password: newpwd, nealname: nealname })
+  const { username, password, emil } = req.body
+  password = md5(password)
+
+  register({ username, password,  emil })
   res.send({ message: '成功!', status: 1 })
 
 })

@@ -8,14 +8,12 @@ var logger = require('morgan');
 // 跨域
 const cors = require('cors')
 
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var todoRouter = require('./routes/todo');
-var studentsRouter = require('./routes/students')
-var articleRouter = require('./routes/article')
-var photosRouter = require('./routes/photos')
-// const fileUpload = require('express-fileupload');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const todoRouter = require('./routes/todo');
+const studentsRouter = require('./routes/students')
+const articleRouter = require('./routes/article')
+const photosRouter = require('./routes/photos')
 
 const jwtAuth = require('./utils/jwt')
 require('./dao/database')
@@ -35,10 +33,6 @@ app.use(express.static(path.join(__dirname, './view/dist')));
 app.use(cors())
 app.use(jwtAuth)//jwt验证
 
-// 启用文件上传
-// app.use(fileUpload({
-//   createParentPath: true
-// }));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/todo', todoRouter);
@@ -64,9 +58,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-
-  // token 解析失败
-  // if(err.name=="")
 });
 
 module.exports = app;

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lazy_tomato</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="file">
+    <button id="btn">开始上传</button>
+
+    <img src="" alt="">
+    <script>
+        btn.onclick = (e) => {
+            const rawFile = file.files[0]
+            let formData = new FormData()
+            formData.append("avatar", rawFile)
+            axios({
+                method: 'post',
+                url: 'http://127.0.0.1:3000/photos/uploadImage',
+                data: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    // 'Authorization': localStorage.getItem("authorization")
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

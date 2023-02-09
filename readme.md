@@ -1,4 +1,4 @@
-## express 项目结构
+## Express 项目结构
 
 - bin
 - app.js 入口文件
@@ -7,6 +7,19 @@
 - routes 路由层
 - service 处理层
 - utils 插件、自定义方法
+
+## Api
+用户
+| 路径   | 功能   | 传参/类型                               | 备注 |
+| -------- | -------- | ------------------------------------------- | ---- |
+| islogin  | 是否登录 | token                                        |      |
+| login    | 登录   | username/string password/string                |      |
+| register | 注册   | username/string password/string mail/string    |      |
+|          |          |                                             |      |
+|          |          |                                             |      |
+|          |          |                                             |      |
+
+
 
 ## 怎么操作数据库？
 
@@ -22,11 +35,11 @@
 /*mongodb数据库*/
 const mongoose = require("mongoose");
 const dbName = "user"; //数据库名
-const dbURL = `mongodb://localhost:27017/${dbName}`;
-mongoose.connect(dbURL);
+const dbUrl = `mongodb://localhost:27017/${dbName}`;
+mongoose.connect(dbUrl);
 
 mongoose.connection.on("connected", () => {
-  console.log(dbURL + "数据库连接成功！");
+  console.log(dbUrl + "数据库连接成功！");
 });
 module.exports = mongoose;
 ```
@@ -53,7 +66,7 @@ const userModel = model("userModel", usersSchema, "userlist");
 module.exports = userModel;
 ```
 
-## 操作（集）
+### 操作（集）
 
 - 演示增删改查
   我们将增删改查先进行封装,主要这里涉及对 mongodb 基本使用：[mongoose.js 官方文档](https://mongoosejs.com/docs/guide.html)，[MDN 中文 mongoose.js](https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Express_Nodejs/mongoose)
@@ -103,7 +116,9 @@ module.exports.updateMany = async function () {
 };
 ```
 
-#### 单独讲讲updateMany使用
-updateMany使用(过滤，更新，选项)
-你需要知道(MongoDB 聚合管道)[https://www.geeksforgeeks.org/mongoose-updatemany-function/?ref=lbp]
+## 关于mongodb
+如果要进行复杂点的增删改查,你需要知道[MongoDB 聚合管道](https://www.geeksforgeeks.org/mongoose-updatemany-function/?ref=lbp)
+
+## 文件上传
+[案例](https://github.com/tierney603/express_file_upload)
 

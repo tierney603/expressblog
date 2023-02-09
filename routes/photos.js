@@ -2,14 +2,9 @@ var express = require("express");
 var router = express.Router();
 const upload = require("../utils/upload");
 
-
-// 随机数id
-const uuidv4 = require("node-uuid").v4;
-
 // 数据库集合配置
 const { Schema, model } = require("mongoose");
 let photoSchema = new Schema({
-  value: String,
   id: String,
   type: String,
   title: String,
@@ -17,7 +12,7 @@ let photoSchema = new Schema({
   url: String,
 });
 // 将模型关联
-const photoModel = model("photoModel", photoSchema, "todo");
+const photoModel = model("photoModel", photoSchema, "avatar");
 
 // 上传图片接口
 router.post("/uploadImage", (req, res) => {
@@ -25,8 +20,8 @@ router.post("/uploadImage", (req, res) => {
     .then(async (imgsrc) => {
       // 上传成功 存储文件路径 到数据库中
       const data = await photoModel.create({
-        url: uuidv4(),
-        // createTime: new Date(),
+        url: imgsrc,
+        createTime: new Date(),
       });
       console.log(data);
       res.send({

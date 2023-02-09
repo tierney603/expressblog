@@ -1,18 +1,17 @@
-const { login, register, isAccess } = require('../dao/loginDao')
+const { login, register, isAccess } = require('../dao/userDao')
 const jwt = require('jsonwebtoken')
-module.exports.login = async function (user) {
-  // 在Dao持久层查看是否有该用户
-  const data = await login(user)
-  console.log(data.length > 0)
-  console.log(data)
 
-  
-  // 如果成功了，就把数据发给表现层
+const dotenv = require("dotenv");
+let { SecretKey } = dotenv.config().parsed;
+
+
+module.exports.login = async function (user) {
+  const data = await login(user)
   if (data.length > 0) {
     // 生成token
     const token = jwt.sign(
       { user },
-      'qwertyuiop', //密钥字符串
+      SecretKey, //密钥字符串
       { expiresIn: 20000 } //设置token有效期，单位默认秒s h
     )
 

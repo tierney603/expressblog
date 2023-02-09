@@ -3,27 +3,24 @@ const multerConfig = require("./multerConfig");
 const dotenv = require("dotenv");
 
 // 2. 定义静态变量
-const fileName = "file"; // 上传的 fileName 名称
 let { serverAddress } = dotenv.config().parsed;
 const updateBaseUrl = serverAddress; // 上传到服务器地址
-const imgPath = "/img/images/"; // 上传到服务器的虚拟目录
+const imgPath = "/images/avatar"; // 上传到服务器的虚拟目录
 
-// 上传接口的 请求参数req  响应参数res
 function upload(req, res) {
   return new Promise((resolve, reject) => {
-    // console.log(req.files.files.name); // the uploaded file object
-    // let fileName=req.files.files.name
-    // console.log("req.file", req.file);
-    console.log("req.files", req.files);
-let fileName='avatar'
-//    const fileName= req.file.filename
+    let fileName = "avatar";
+
+    // let fileType = req.path.slice(1, req.path.length);//根据接口名称放入对应地址
+
     multerConfig.single(fileName)(req, res, function (err) {
       if (err) {
         reject(err);
       } else {
         // `req.file.filename`  请求文件名称后缀
         // `updateBaseUrl + imgPath + req.file.filename` 完整的服务器虚拟目录
-        resolve(updateBaseUrl + imgPath + req.file.filename);
+        console.log('imgPath',imgPath)
+        resolve(imgPath + req.file.filename);
       }
     });
   });
