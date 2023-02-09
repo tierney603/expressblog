@@ -15,7 +15,7 @@ const studentsRouter = require('./routes/students')
 const articleRouter = require('./routes/article')
 const photosRouter = require('./routes/photos')
 
-const jwtAuth = require('./utils/jwt')
+const {varifyToken,errorToken} = require('./utils/jwt')
 require('./dao/database')
 
 var app = express();
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './view/dist')));
 app.use(cors())
-app.use(jwtAuth)//jwt验证
+app.use(varifyToken)//jwt验证
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -41,7 +41,8 @@ app.use('/article', articleRouter)
 app.use('/photos', photosRouter)
 
 
-
+// token失败处理
+app.use(errorToken);
 
 
 // catch 404 and forward to error handler

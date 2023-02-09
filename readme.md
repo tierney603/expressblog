@@ -9,16 +9,33 @@
 - utils 插件、自定义方法
 
 ## Api
-用户
-| 路径   | 功能   | 传参/类型                               | 备注 |
-| -------- | -------- | ------------------------------------------- | ---- |
-| islogin  | 是否登录 | token                                        |      |
-| login    | 登录   | username/string password/string                |      |
-| register | 注册   | username/string password/string mail/string    |      |
-|          |          |                                             |      |
-|          |          |                                             |      |
-|          |          |                                             |      |
+|  请求方式| 路径   | 功能   | 传参/类型                               | 备注 |
+|--| -------- | -------- | ------------------------------------------- | ---- |
+| get | [/users/islogin](#islogin)  | 是否登录 | token                           |      |
+| post |  [/users/login](#login)      | 登录   | username/string password/string            |      |
+| post |  [/users/register](#register)  | 注册   | username/string password/string mail/string   |      |
 
+### 用户
+<b id="islogin"> /users/islogin `get` 是否登录</b>
+
+|  传参| 类型   |
+|------| -------- | 
+| token | / | 
+
+<b id="login"> /users/login `post` 登录</b>
+
+|  传参| 类型   |名称|
+|------| -------- | -------- | 
+| username | string| 用户名|
+| password | string| 密码|
+
+<b id="register">/users/register `post` 注册</b>
+
+|  传参| 类型   |名称|
+|------| -------- | -------- | 
+| username | string| 用户名|
+| password | string| 密码|
+| mail | string| 邮箱|
 
 
 ## 怎么操作数据库？
@@ -121,4 +138,3 @@ module.exports.updateMany = async function () {
 
 ## 文件上传
 [案例](https://github.com/tierney603/express_file_upload)
-
